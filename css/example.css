@@ -1,0 +1,19 @@
+body {
+    background-color: #DDEEFF;
+    padding: 0 2em;
+}
+
+h1 {
+    text-align: center;
+}
+
+.text.content {
+    border: 1px dotted black;
+    max-width: 50em;
+    margin: 2em auto 0 auto;
+    padding: 1em;
+}
+
+#talkbox {
+    border: 2px solid grey;
+}

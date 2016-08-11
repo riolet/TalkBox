@@ -1,0 +1,87 @@
+#talkbox {
+    position: relative;
+    margin: 0 auto;
+    width: 20em;
+    height: 30em;
+    padding: 0;
+    overflow: hidden;
+    font-family: sans;
+}
+
+/* message history section */
+
+#talkbox .tb_content {
+    overflow: auto;
+    direction: ltr;
+    width: 100%;
+}
+
+#talkbox .msg {
+    position: relative;
+    margin: 0.6em 0.5em 0.0em 0.5em;
+    padding: 0;
+    border: 0;
+}
+
+#talkbox div.client + div.client{
+    margin: 0em 0.5em 0.0em 0.5em;
+}
+
+#talkbox div.server + div.server{
+    margin: 0em 0.5em 0.0em 0.5em;
+}
+
+#talkbox .msg.client {
+    position: relative;
+    direction: rtl;
+}
+
+#talkbox .msg div{
+    margin: 0;
+    padding: 0.2em 0.4em;
+    display: inline-block;
+}
+
+#talkbox .client > div{
+    border: 1px solid rgba(0, 128, 0, 0.2);
+    border-radius: 0.25em;
+    background-color: #FFFFFF;
+    color: #114411;
+}
+
+#talkbox .server > div{
+    border: 1px solid rgba(0, 0, 255, 0.2);
+    border-radius: 0.25em;
+    background-color: #FFFFFF;
+    color: #002288;
+}
+
+#talkbox .msg div div {
+    display: block;
+    direction: ltr;
+}
+
+/* Input section */
+
+#talkbox .tb_input {
+    margin: 0;
+    border: 0;
+    padding: 0;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+#talkbox textarea {
+    resize: none;
+    margin: 0;
+    border: 0;
+    border-top: 2px solid black;
+    position: absolute;
+    bottom: 0;
+    width: calc(100% - 0.5em);
+    font-size: 100%;
+    padding: 0.25em;
+    overflow-x: hidden;
+}
+
