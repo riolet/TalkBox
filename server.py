@@ -13,7 +13,7 @@ urls = (
 )
 render = web.template.render(base_path)
 app = web.application(urls, globals())
-session = web.session.Session(app, web.session.DiskStore('sessions'), initializer={'count': 0})
+session = web.session.Session(app, web.session.DiskStore('sessions'), initializer={'count': 0, 'previous': ' '})
 
 class Home:
     def GET(self):
@@ -28,12 +28,18 @@ class Speaker:
         session.count += 1
         request = web.input()
         if request.has_key("msg"):
-            message = "({0}): {1}".format(session.count, " ".join(request.msg.split(" ")[::-1]))
+            if session.previous == request.msg:
+                message = "({0}): Duplicate received. Ignoring.".format(session.count)
+                response = {"code": 2, "msg": message}
+            else:
+                message = "({0}): {1}".format(session.count, " ".join(request.msg.split(" ")[::-1]))
+                response = {"code": 0, "msg": message}
+                session.previous = request.msg
         else:
             message = "({0}): `msg` key missing from request".format(session.count)
+            response = {"code": 1, "msg": message}
 
         web.header("Content-Type", "application/json")
-        response = {"msg": message}
         return json.dumps(response)
 
 

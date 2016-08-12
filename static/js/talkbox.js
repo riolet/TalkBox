@@ -49,6 +49,10 @@ function tb_keydown(event) {
             g_tb.input.value = "";
         }
         return false;
+    } else if (event.keyCode === 38 && g_tb.previous !== undefined) {
+        var temp = g_tb.previous;
+        g_tb.previous = g_tb.input.value;
+        g_tb.input.value = temp;
     }
 }
 
@@ -63,11 +67,12 @@ function tb_submit(msg) {
     var request = {};
     var path = g_tb.root.attributes.src.value
     request.msg = msg;
+    g_tb.previous = msg;
 
     //place server request
     $.ajax({
         url: path,
-        type: "GET",
+        type: "POST",
         data: request,
         error: tb_server_error,
         success: tb_server_response
@@ -85,10 +90,16 @@ function tb_server_error(jqXHR, status, error) {
 
 function tb_server_response(response, status, jqXHR) {
     "use strict";
-    console.log(response);
-    var message = {"local": false, "msg": response.msg};
-    tb_add_message(message);
-    g_tb.history.scrollTop = g_tb.history.scrollHeight;
+    switch(response.code) {
+        case 0:
+            var message = {"local": false, "msg": response.msg};
+            tb_add_message(message);
+            g_tb.history.scrollTop = g_tb.history.scrollHeight;
+            break;
+        default:
+            console.log("Message error! (code " + response.code.toString() + ")");
+            console.log("---\t" + response.msg);
+    }
 }
 
 function tb_add_message(message) {
