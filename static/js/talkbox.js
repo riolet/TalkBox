@@ -85,7 +85,8 @@ function tb_server_error(jqXHR, status, error) {
 
 function tb_server_response(response, status, jqXHR) {
     "use strict";
-    var message = {"local": false, "msg": response};
+    console.log(response);
+    var message = {"local": false, "msg": response.msg};
     tb_add_message(message);
     g_tb.history.scrollTop = g_tb.history.scrollHeight;
 }
