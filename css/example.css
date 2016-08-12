@@ -16,4 +16,7 @@ h1 {
 
 #talkbox {
     border: 2px solid grey;
+    margin: 0 auto;
+    width: 20em;
+    height: 30em;
 }

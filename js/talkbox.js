@@ -16,11 +16,13 @@ function talkbox_init() {
     //order is important here: initialize input, then messages
     tb_init_input(div_input);
     tb_init_messages(div_msg);
-    add_mock_messages()
+    add_mock_messages();
+    g_tb.history.scrollTop = g_tb.history.scrollHeight;
 
 }
 
 function tb_init_messages() {
+    "use strict";
     //maxHeight is talkbox.clientHeight - inputHeight.offsetHeight
     var h = g_tb.root.clientHeight;
     h -= g_tb.input.offsetHeight;
@@ -33,7 +35,7 @@ function tb_init_input(div) {
     var input = document.createElement("textarea");
     input.id = "tb_input";
     input.rows = 3;
-    input.placeholder = "type here";
+    input.placeholder = "type your message here. \n<enter> to submit";
     input.onkeydown = tb_keydown;
     g_tb.input = input;
     div.appendChild(input);
@@ -42,10 +44,48 @@ function tb_init_input(div) {
 function tb_keydown(event) {
     "use strict";
     if (event.keyCode === 13 && (!event.ctrlKey && !event.shiftKey)) {
-        console.log("submitting: " + g_tb.input.value)
+        tb_submit(g_tb.input.value);
         g_tb.input.value = "";
         return false;
     }
+}
+
+function tb_submit(msg) {
+    "use strict";
+    //add the local message
+    var message = {"local": true, "msg": msg};
+    tb_add_message(message);
+    g_tb.history.scrollTop = g_tb.history.scrollHeight;
+
+    //prepare the server request
+    var request = {};
+    var path = g_tb.root.attributes.src.value
+    request.msg = msg;
+
+    //place server request
+    $.ajax({
+        url: path,
+        type: "GET",
+        data: request,
+        error: tb_server_error,
+        success: tb_server_response
+    });
+}
+
+function tb_server_error(jqXHR, status, error) {
+    "use strict";
+    console.log("----- AJAX Error -----");
+    console.log(jqXHR);
+    console.log(status);
+    console.log(error);
+    console.log("----------------------");
+}
+
+function tb_server_response(response, status, jqXHR) {
+    "use strict";
+    var message = {"local": false, "msg": response};
+    tb_add_message(message);
+    g_tb.history.scrollTop = g_tb.history.scrollHeight;
 }
 
 function tb_add_message(message) {
@@ -72,11 +112,13 @@ function tb_add_message(message) {
 }
 
 function add_mock_message(local, message) {
-    msg = {"local": local, "msg": message};
+    "use strict";
+    var msg = {"local": local, "msg": message};
     tb_add_message(msg);
 }
 
 function add_mock_messages() {
+    "use strict";
     add_mock_message(true, "knock-knock");
     add_mock_message(false, "who's there?");
     add_mock_message(true, "night time is wasted");

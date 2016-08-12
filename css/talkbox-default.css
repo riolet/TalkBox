@@ -1,8 +1,5 @@
 #talkbox {
     position: relative;
-    margin: 0 auto;
-    width: 20em;
-    height: 30em;
     padding: 0;
     overflow: hidden;
     font-family: sans;
@@ -34,6 +31,7 @@
 #talkbox .msg.client {
     position: relative;
     direction: rtl;
+    text-align: right;
 }
 
 #talkbox .msg div{
