@@ -5,10 +5,10 @@ function getIfSet(&$value, $default = null) {
   return isset($value) ? $value : $default;
 }
 
-if (!isset($_SESSION['count']) {
+if (!isset($_SESSION['count'])) {
   $_SESSION['count'] = 0;
 }
-if (!isset($_SESSION['previous']) {
+if (!isset($_SESSION['previous'])) {
   $_SESSION['previous'] = ' ';
 }
 
