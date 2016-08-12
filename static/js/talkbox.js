@@ -16,8 +16,10 @@ function talkbox_init() {
     //order is important here: initialize input, then messages
     tb_init_input(div_input);
     tb_init_messages(div_msg);
-    add_mock_messages();
-    g_tb.history.scrollTop = g_tb.history.scrollHeight;
+
+    //for testing
+    //add_mock_messages();
+    //g_tb.history.scrollTop = g_tb.history.scrollHeight;
 
 }
 
