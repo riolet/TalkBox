@@ -8,8 +8,8 @@ web.config.debug = False
 # Manage routing from here. Regex matches URL and chooses class by name
 urls = (
     '/', 'Home',
-    '/request', 'Speaker',
-    '/reset', 'Reset',
+    '/request.php', 'Speaker',
+    '/reset.php', 'Reset',
 )
 render = web.template.render(base_path)
 app = web.application(urls, globals())
