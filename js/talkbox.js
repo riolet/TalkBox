@@ -44,8 +44,10 @@ function tb_init_input(div) {
 function tb_keydown(event) {
     "use strict";
     if (event.keyCode === 13 && (!event.ctrlKey && !event.shiftKey)) {
-        tb_submit(g_tb.input.value);
-        g_tb.input.value = "";
+        if (g_tb.input.value.length !== 0) {
+            tb_submit(g_tb.input.value);
+            g_tb.input.value = "";
+        }
         return false;
     }
 }
