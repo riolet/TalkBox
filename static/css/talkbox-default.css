@@ -5,6 +5,7 @@
     font-family: sans;
 }
 
+
 /* message history section */
 
 #talkbox .tb_content {
@@ -40,6 +41,7 @@
     display: inline-block;
 }
 
+/* This controls border, bubble, and text color for the user's messages */
 #talkbox .client > div{
     border: 1px solid rgba(0, 128, 0, 0.2);
     border-radius: 0.25em;
@@ -47,6 +49,7 @@
     color: #114411;
 }
 
+/* This controls border, bubble, and text color for the server's messages */
 #talkbox .server > div{
     border: 1px solid rgba(0, 0, 255, 0.2);
     border-radius: 0.25em;
@@ -59,7 +62,8 @@
     direction: ltr;
 }
 
-/* Input section */
+
+/* Input text box */
 
 #talkbox .tb_input {
     margin: 0;
