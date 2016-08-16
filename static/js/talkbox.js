@@ -72,25 +72,45 @@ function tb_submit(msg) {
     g_tb.previous = msg;
 
     //place server request
-    $.ajax({
-        url: path,
-        type: "POST",
-        data: request,
-        error: tb_server_error,
-        success: tb_server_response
-    });
+    tb_send_ajax(request);
 }
 
-function tb_server_error(jqXHR, status, error) {
+function tb_send_ajax(request) {
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                tb_server_response(JSON.parse(xhr.responseText), xhr.status, xhr)
+            } else {
+                tb_server_error(xhr, xhr.status, xhr.response)
+            }
+        }
+    };
+    xhr.open("POST", "./request.php", true);
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhr.send(tb_encode_request(request))
+}
+
+function tb_encode_request(request) {
+    var str = [];
+    for(var k in request) {
+        if (request.hasOwnProperty(k)) {
+            str.push(encodeURIComponent(k) + "=" + encodeURIComponent(request[k]));
+        }
+    }
+    return str.join("&");
+}
+
+function tb_server_error(xhr, status, error) {
     "use strict";
     console.log("----- AJAX Error -----");
-    console.log(jqXHR);
-    console.log(status);
+    console.log(xhr);
+    console.log(status + " - " + xhr.statusText);
     console.log(error);
     console.log("----------------------");
 }
 
-function tb_server_response(response, status, jqXHR) {
+function tb_server_response(response, status, xhr) {
     "use strict";
     switch(response.code) {
         case 0:
